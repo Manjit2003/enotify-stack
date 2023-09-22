@@ -85,6 +85,22 @@ services:
       - elasticsearch
     restart: unless-stopped
 
+
+  nats:
+    image: docker.io/bitnami/nats:2
+    ports:
+      - 4222:4222
+      - 8222:8222
+      - 6222:6222
+      
+    networks:
+      - enotify-network
+
+    environment:
+      # enable jetstream
+      - NATS_EXTRA_ARGS=-js -m 8222
+    restart: unless-stopped
+
 networks:
   enotify-network:
     driver: bridge
